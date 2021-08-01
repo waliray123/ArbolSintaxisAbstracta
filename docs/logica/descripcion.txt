@@ -1,0 +1,27 @@
+Usando la siguiente gramatica generar un esquema de traduccion que cree y dibuje un arbol de sintaxis abstracta que represente la precedencia de las operaciones de la cadena de entrada.
+Una vez creado el arbol de sintaxis abstracta, recorrerlo en postorden para que se puedan imprimir las operaciones en notacion postfija.
+I -> E 					{nodoPadreTodos = E}
+
+E -> 	T 				E'.exp1 = T
+	E'					return (E')
+
+E'-> 	+ 				
+	T 					E'1.exp = T
+	E'1					generarUnion(E',E'1,"+"); return(idNodoSum);
+
+E'-> lambda				return(E'.exp1)
+
+T  -> 	F 				T'1.exp1 = F
+ 	T'1					return(T'1);
+
+T' -> 	*				
+	F 					T'1.exp1 = F
+	T'1					generarUnion(T',T'1,"*"); return(idNodoPor);
+
+T' -> lambda			return(T.exp1)
+
+F -> ID					crearNodo(ID),return(id)
+
+F -> NUM				crearNodo(NUM),return(id)	
+
+F -> ( E )				return(E)
